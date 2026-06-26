@@ -21,7 +21,6 @@ computation and beyond — with **statements** (`exercises.md`) and **fully work
 - [Testing](#-testing)
 - [Conventions](#-conventions)
 - [Contributing](#-contributing)
-- [License](#-license)
 
 ---
 
@@ -43,7 +42,6 @@ computation and beyond — with **statements** (`exercises.md`) and **fully work
 │   └── build.properties               # sbt version
 ├── src/
 │   ├── main/scala/
-│   │   ├── bonus/                     # Optional / advanced exercises
 │   │   ├── exams/                     # Mock exam solutions
 │   │   │   └── MockExamSolution.scala
 │   │   └── sessions/                  # Course sessions (1 → 8)
@@ -79,7 +77,6 @@ computation and beyond — with **statements** (`exercises.md`) and **fully work
 | **5** | Pattern matching | `describe(x: Any)`, `Either[String, Double]` with `safeSqrt` |
 | **6** | Generics & traits | `firstElement[T]`, abstract `Shape` (`Circle`, `Rectangle`) |
 | **7** | Concurrency | `Future`, `ExecutionContext`, parallel sum with `Vector.splitAt` |
-| **8** | TBD | Reserved |
 | **Exam** | Mock exam | Aggregations on `Record` (average / min-max / daily summary) |
 
 ---
@@ -102,7 +99,7 @@ Optional but recommended:
 ```bash
 # 1. Clone
 git clone <repository-url>
-cd Scala-curse
+cd scala-course
 
 # 2. Compile everything
 sbt compile
@@ -158,14 +155,8 @@ sbt "testOnly sessions.session3.Session3Spec"
 
 ## 🤝 Contributing
 
-1. Create a branch: `git checkout -b session9/topic-name`
+1. Create a branch: `git checkout -b feature/YMO/sessionX`
 2. Add the statement under `sessions/sessionN/exercises.md`.
 3. Add the solution(s) as `SessionNExerciseX.scala` in the same folder.
 4. Make sure `sbt compile` and `sbt test` are green.
 5. Open a Pull Request.
-
----
-
-## 📄 License
-
-MIT — see [`LICENSE`](LICENSE) if present, otherwise feel free to reuse for educational purposes.
