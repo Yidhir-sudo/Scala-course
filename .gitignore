@@ -1,9 +1,8 @@
 # Default .gitignore for the project.
 
-### Intellij ###
+### IntelliJ ###
 .idea/
 out/
-target/
 *.iml
 *.ipr
 *.iws
@@ -25,7 +24,7 @@ Thumbs.db
 Desktop.ini
 
 ### SBT ###
-dist/*
+dist/
 target/
 project/target/
 project/project/
@@ -40,41 +39,29 @@ project/plugins/project/
 .sbt/
 .coursier/
 
-### Scala ###
+### Scala / Metals / Bloop ###
 .bloop/
 **/.bloop/
 project/.bloop/
-.bsp
-*.metals
+.bsp/
 .metals/
 **/metals.sbt
 project/metals.sbt
 
 ### Vim ###
-# Swap
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]
 [._]s[a-rt-v][a-z]
 [._]ss[a-gi-z]
 [._]sw[a-p]
-
-# Session
 Session.vim
 Sessionx.vim
-
-# Temporary
 .netrwhist
-
-# Auto-generated tag files
 tags
-
-# Persistent undo
 [._]*.un~
-
-# Coc configuration directory
 .vim
 
-### VisualStudioCode ###
+### VS Code ###
 .vscode/
 *.code-workspace
 .history/
@@ -84,13 +71,11 @@ tags
 .env.*
 !.env.example
 
-### Docusaurus ###
-.docusaurus
-node_modules
-website/build
-
 ### sbt-scalafix-defaults ###
 .scalafix.conf
 
 ### sbt-scalafmt-defaults ###
 .scalafmt.conf
+
+### project specific ###
+src/main/scala/exams/**/*_grades.md
