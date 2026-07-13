@@ -2,14 +2,14 @@
 
 > Adapted from [`sessions/session5/Session5.scala`](../src/main/scala/sessions/session5/Session5.scala) (Exercise 2) in this repo.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Either: Safe Square Root |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 10 minutes |
+| Course / Training | attach to exactly one — whichever holds session 5 |
 
 ### Description
 
@@ -30,19 +30,16 @@ def safeSqrt(x: Double): Either[String, Double]
     println(safeSqrt(9))   // Right(3.0)
     println(safeSqrt(-4))  // Left(Negative number)
 
-Your `main` should call `safeSqrt(9)` then `safeSqrt(-4)`, printing each
-result.
+Call `safeSqrt(9)` then `safeSqrt(-4)`, printing each result.
 ```
 
 ### Starter code
 
 ```scala
-object EitherSafeSqrt {
+object Main extends App {
 
-  def main(args: Array[String]): Unit = {
-    println(safeSqrt(9))
-    println(safeSqrt(-4))
-  }
+  println(safeSqrt(9))
+  println(safeSqrt(-4))
 
   def safeSqrt(x: Double): Either[String, Double] = {
     // TODO: Left("Negative number") if x < 0, otherwise Right(math.sqrt(x))
@@ -51,16 +48,15 @@ object EitherSafeSqrt {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`10-either-safe-sqrt.scala`](10-either-safe-sqrt.scala).
+Teacher-only — do not share with students. Upload [`10-either-safe-sqrt.scala`](10-either-safe-sqrt.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
 
-```text
-Right(3.0)
-Left(Negative number)
-```
+| Name | Call expression | Expected output | Trim | Tolerance |
+|---|---|---|---|---|
+| non-negative input | `safeSqrt(9)` | `Right(3.0)` | off | — |
+| negative input | `safeSqrt(-4)` | `Left(Negative number)` | off | — |
 
-Verified locally with `scala run 10.scala --server=false` (Scala 3) — output
-matches exactly.
+Verified locally by simulating how CodeVault's automated test-case check evaluates a call expression against the correction and both match the expected outputs above.

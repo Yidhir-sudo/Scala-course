@@ -1,10 +1,7 @@
-// Reference solution — Futures: Parallel Sum — teacher-only, do not share with students
-
-import scala.concurrent._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-
-object FuturesParallelSum {
+object Main {
+  import scala.concurrent._
+  import scala.concurrent.ExecutionContext.Implicits.global
+  import scala.concurrent.duration._
 
   def main(args: Array[String]): Unit = {
     val data = (1 to 1000000).toVector

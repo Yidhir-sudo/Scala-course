@@ -1,13 +1,9 @@
-// Reference solution — Guess the Number (non-interactive) — teacher-only, do not share with students
+object Main extends App {
 
-object GuessTheNumber {
+  val secret = 42
+  val guesses = List(50, 25, 40, 45, 42)
 
-  def main(args: Array[String]): Unit = {
-    val secret = 42
-    val guesses = List(50, 25, 40, 45, 42)
-
-    play(secret, guesses).foreach(println)
-  }
+  play(secret, guesses).foreach(println)
 
   def play(secret: Int, guesses: List[Int]): List[String] = {
     val indexed = guesses.zipWithIndex

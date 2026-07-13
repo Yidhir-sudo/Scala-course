@@ -7,16 +7,17 @@ three different ways (`groupBy`, pattern-matched `map`, `foldLeft`) side by
 side — great for a lecture, confusing as a single exercise. This version
 asks for just one clean implementation. It also prints the map as sorted
 `word -> count` lines instead of relying on `Map.toString`, whose entry
-order isn't guaranteed — that keeps grading deterministic.
+order isn't guaranteed — that keeps the printed output (and any test case
+built on it) deterministic.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Word Counting |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 15 minutes |
+| Course / Training | attach to exactly one — whichever holds session 2 |
 
 ### Description
 
@@ -36,23 +37,20 @@ need the size of each group.
     val words = List("A", "B", "A", "C", "B", "A")
     wordCount(words) // Map(A -> 3, B -> 2, C -> 1)
 
-Your `main` should call `wordCount` on that example list, then print one
-line per word in **alphabetical order**, formatted as `word -> count`
-(sorting keeps the output predictable — a `Map`'s own printed order isn't
-guaranteed).
+Call `wordCount` on that example list, then print one line per word in
+**alphabetical order**, formatted as `word -> count` (sorting keeps the
+output predictable — a `Map`'s own printed order isn't guaranteed).
 ```
 
 ### Starter code
 
 ```scala
-object WordCounting {
+object Main extends App {
 
-  def main(args: Array[String]): Unit = {
-    val words = List("A", "B", "A", "C", "B", "A")
+  val words = List("A", "B", "A", "C", "B", "A")
 
-    wordCount(words).toList.sortBy(_._1).foreach { case (word, count) =>
-      println(s"$word -> $count")
-    }
+  wordCount(words).toList.sortBy(_._1).foreach { case (word, count) =>
+    println(s"$word -> $count")
   }
 
   def wordCount(words: List[String]): Map[String, Int] = {
@@ -62,17 +60,18 @@ object WordCounting {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`03-word-counting.scala`](03-word-counting.scala).
+Teacher-only — do not share with students. Upload [`03-word-counting.scala`](03-word-counting.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
 
-```text
-A -> 3
-B -> 2
-C -> 1
-```
+| Name | Call expression | Expected output | Trim | Tolerance |
+|---|---|---|---|---|
+| counts each word, sorted by key | `wordCount(List("A", "B", "A", "C", "B", "A")).toList.sortBy(_._1).mkString(",")` | `(A,3),(B,2),(C,1)` | off | — |
 
-Verified locally with `scala run 03.scala --server=false` (Scala 3) — output
-matches exactly.
+The call expression sorts before `mkString` for the same reason `main`
+does: a bare `Map` has no guaranteed print order, and the platform's automated check
+does an exact string comparison.
+
+Verified locally by simulating how CodeVault's automated test-case check evaluates a call expression against the correction and the output matches the expected output above.

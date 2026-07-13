@@ -2,14 +2,14 @@
 
 > Adapted from [`sessions/session5/Session5.scala`](../src/main/scala/sessions/session5/Session5.scala) (Exercise 1) in this repo.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Pattern Matching: Describe |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 15 minutes |
+| Course / Training | attach to exactly one — whichever holds session 5 |
 
 ### Description
 
@@ -31,21 +31,19 @@ Using `match`, return:
     println(describe(List(1, 2, 3))) // List of length 3
     println(describe(3.14))          // Unknown type
 
-Your `main` should call `describe` on exactly those four values, in that
-order, printing each result.
+Call `describe` on exactly those four values, in that order, printing each
+result.
 ```
 
 ### Starter code
 
 ```scala
-object PatternMatchingDescribe {
+object Main extends App {
 
-  def main(args: Array[String]): Unit = {
-    println(describe(5))
-    println(describe(""))
-    println(describe(List(1, 2, 3)))
-    println(describe(3.14))
-  }
+  println(describe(5))
+  println(describe(""))
+  println(describe(List(1, 2, 3)))
+  println(describe(3.14))
 
   def describe(x: Any): String = x match {
     // TODO: case for a positive Int
@@ -57,18 +55,17 @@ object PatternMatchingDescribe {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`09-pattern-matching-describe.scala`](09-pattern-matching-describe.scala).
+Teacher-only — do not share with students. Upload [`09-pattern-matching-describe.scala`](09-pattern-matching-describe.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
 
-```text
-Positive number
-Empty string
-List of length 3
-Unknown type
-```
+| Name | Call expression | Expected output | Trim | Tolerance |
+|---|---|---|---|---|
+| positive Int | `describe(5)` | `Positive number` | off | — |
+| empty String | `describe("")` | `Empty string` | off | — |
+| a List | `describe(List(1, 2, 3))` | `List of length 3` | off | — |
+| anything else | `describe(3.14)` | `Unknown type` | off | — |
 
-Verified locally with `scala run 09.scala --server=false` (Scala 3) — output
-matches exactly, no warnings.
+Verified locally by simulating how CodeVault's automated test-case check evaluates a call expression against the correction and all four match the expected outputs above.

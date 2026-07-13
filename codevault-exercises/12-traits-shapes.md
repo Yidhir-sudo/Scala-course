@@ -3,18 +3,22 @@
 > Adapted from [`sessions/session6/classes/{Shape,Circle,Rectangle}.scala`](../src/main/scala/sessions/session6/classes) + [`Session6.scala`](../src/main/scala/sessions/session6/Session6.scala) (Exercise 2) in this repo.
 
 **Platform adaptation:** the original spreads `Shape`, `Circle`, `Rectangle`
-and the demo across four files. Merged into one file for CodeVault's
-single-file sandbox — the language content (`abstract class`, shared
-interface, polymorphic `.map(_.area).sum`) is unchanged.
+and the demo across four files. Merged into one file here, with everything
+nested inside a single outer object — CodeVault's automated test cases
+call an expression directly against your submission, so anything a test
+needs to reference has to live in the same top-level scope as the rest of
+the code (see [07 — Rectangle](07-oop-rectangle.md) for the same note). The
+language content (`abstract class`, shared interface, polymorphic
+`.map(_.area).sum`) is unchanged.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Traits & Abstraction: Shapes |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 15 minutes |
+| Course / Training | attach to exactly one — whichever holds session 6 |
 
 ### Description
 
@@ -40,29 +44,27 @@ care whether each one is a `Circle` or a `Rectangle`, only that it's a
     val shapes = List(new Circle(2.0), new Rectangle(3.0, 4.0))
     println(totalArea(shapes)) // 24.566370614359172  (4π + 12)
 
-Your `main` should build that exact list and print `totalArea(shapes)`.
+Build that exact list and print `totalArea(shapes)`.
 ```
 
 ### Starter code
 
 ```scala
-abstract class Shape {
-  def area: Double
-}
-
-class Circle(val radius: Double) extends Shape {
-  // TODO: def area = π * radius * radius (use math.Pi)
-}
-
-class Rectangle(val width: Double, val height: Double) extends Shape {
-  // TODO: def area = width * height
-}
-
-object ShapesDemo {
-  def main(args: Array[String]): Unit = {
-    val shapes = List(new Circle(2.0), new Rectangle(3.0, 4.0))
-    println(totalArea(shapes))
+object Main extends App {
+  abstract class Shape {
+    def area: Double
   }
+
+  class Circle(val radius: Double) extends Shape {
+    // TODO: def area = π * radius * radius (use math.Pi)
+  }
+
+  class Rectangle(val width: Double, val height: Double) extends Shape {
+    // TODO: def area = width * height
+  }
+
+  val shapes = List(new Circle(2.0), new Rectangle(3.0, 4.0))
+  println(totalArea(shapes))
 
   def totalArea(shapes: List[Shape]): Double = {
     // TODO: sum the area of every shape in the list
@@ -71,19 +73,21 @@ object ShapesDemo {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`12-traits-shapes.scala`](12-traits-shapes.scala).
+Teacher-only — do not share with students. Upload [`12-traits-shapes.scala`](12-traits-shapes.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
 
-```text
-24.566370614359172
-```
+| Name | Call expression | Expected output | Trim | Tolerance |
+|---|---|---|---|---|
+| Circle area | `new Circle(2.0).area` | `12.566370614359172` | off | `0.0001` |
+| Rectangle area | `new Rectangle(3.0, 4.0).area` | `12.0` | off | `0.0001` |
+| total area across shapes | `totalArea(List(new Circle(2.0), new Rectangle(3.0, 4.0)))` | `24.566370614359172` | off | `0.0001` |
 
-(This is `4π + 12` printed at full `Double` precision — a value ≈24.57 is
-the correct area, but the grader should look for the literal digits above
-since that's what `println` on a raw `Double` actually produces.)
+All three return `Double`, so a numeric tolerance is used — a small
+rounding difference shouldn't fail a correct answer.
 
-Verified locally with `scala run 12.scala --server=false` (Scala 3) — output
-matches exactly.
+Verified locally by simulating how CodeVault's automated test-case check
+evaluates each call expression against the correction — all three match
+the expected outputs above.

@@ -3,17 +3,18 @@
 > Adapted from [`sessions/session3/Session3.scala`](../src/main/scala/sessions/session3/Session3.scala) (Exercise 2) in this repo.
 
 **Test-simplification note:** as with [03 — Word Counting](03-word-counting.md),
-`main` prints the resulting map sorted alphabetically rather than relying on
-default `Map` iteration order, so the output is deterministic and gradable.
+the output (and the test case's call expression) sorts the resulting map
+alphabetically rather than relying on default `Map` iteration order, so the
+comparison is deterministic.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Functional Pipeline: Text |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 15 minutes |
+| Course / Training | attach to exactly one — whichever holds session 3 |
 
 ### Description
 
@@ -35,20 +36,18 @@ It should, in order:
     // scala -> 2, great -> 1, functional -> 1
     // ("is" and "and" are dropped: they're shorter than 4 characters)
 
-Your `main` should call `textPipeline` on that example text, then print one
-line per word in **alphabetical order**, formatted as `word -> count`.
+Call `textPipeline` on that example text, then print one line per word in
+**alphabetical order**, formatted as `word -> count`.
 ```
 
 ### Starter code
 
 ```scala
-object FunctionalPipelineText {
+object Main extends App {
 
-  def main(args: Array[String]): Unit = {
-    val text = "Scala is great and Scala is functional"
-    textPipeline(text).toList.sortBy(_._1).foreach { case (word, count) =>
-      println(s"$word -> $count")
-    }
+  val text = "Scala is great and Scala is functional"
+  textPipeline(text).toList.sortBy(_._1).foreach { case (word, count) =>
+    println(s"$word -> $count")
   }
 
   def textPipeline(text: String): Map[String, Int] = {
@@ -58,17 +57,14 @@ object FunctionalPipelineText {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`06-functional-pipeline-text.scala`](06-functional-pipeline-text.scala).
+Teacher-only — do not share with students. Upload [`06-functional-pipeline-text.scala`](06-functional-pipeline-text.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
 
-```text
-functional -> 1
-great -> 1
-scala -> 2
-```
+| Name | Call expression | Expected output | Trim | Tolerance |
+|---|---|---|---|---|
+| counts words of length >= 4, sorted by key | `textPipeline("Scala is great and Scala is functional").toList.sortBy(_._1).mkString(",")` | `(functional,1),(great,1),(scala,2)` | off | — |
 
-Verified locally with `scala run 06.scala --server=false` (Scala 3) — output
-matches exactly.
+Verified locally by simulating how CodeVault's automated test-case check evaluates a call expression against the correction and the output matches the expected output above.

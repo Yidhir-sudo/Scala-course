@@ -1,40 +1,29 @@
-# 16 — Exam: Sales Analytics with Apache Spark
+# 16 — Sales Analytics with Apache Spark
 
-> Adapted from [`exams/2026/M1_T2_IABD_RJ.md`](../src/main/scala/exams/2026/M1_T2_IABD_RJ.md) + [`.scala`](../src/main/scala/exams/2026/M1_T2_IABD_RJ.scala) in this repo — the most advanced item in the set, a full DataFrame-API exam (window functions, pivots, joins, UDFs).
+> Adapted from [`exams/2026/M1_T2_IABD_RJ.md`](../src/main/scala/exams/2026/M1_T2_IABD_RJ.md) + [`.scala`](../src/main/scala/exams/2026/M1_T2_IABD_RJ.scala) in this repo — the most advanced item in the set, a full DataFrame-API problem (window functions, pivots, joins, UDFs).
 
 **⚠️ Platform adaptation — this one needed a structural rewrite, not just a
-trim.** CodeVault's `spark_scala` submissions don't run through Piston like
-plain `scala` does. Per [`backend/runner/app.py`](https://github.com/Yidhir-sudo/codevault/blob/main/backend/runner/app.py)
-in the CodeVault app repo,
-they're written to a temp file, `System.exit(0)` is appended, and the whole
-thing is fed to:
-
-    spark-shell --master local[1] --conf spark.ui.enabled=false --conf spark.log.level=ERROR -i <file>
-
-`spark-shell -i` replays the file as a sequence of **REPL commands**, top to
-bottom — exactly like typing them in interactively. The original exam's
-`object M1_T2_IABD_RJ { def main(args) = ... }` would just get *defined* by
-that process and then... nothing, since nothing in the file ever calls
-`.main(Array())`. The object would compile fine and produce zero output.
+trim.** CodeVault's `spark_scala` language runs a submission more like
+replaying a script line by line than compiling a single program — an
+`object M1_T2_IABD_RJ { def main(args) = ... }` would just get *defined*
+and then... nothing, since nothing ever calls `.main(Array())`. It would
+compile fine and produce zero output.
 
 The fix: this version drops the `object`/`def main` wrapper entirely and
 writes the `case class`, the `SparkSession`, the ten functions, and the ten
 `println(...); fooBar(df).show()` calls as **flat top-level statements**,
-matching what the REPL actually expects. I verified this end-to-end by
-running the adapted file through the exact command above against a local
-Spark 4.1.1 install (close enough to the project's Spark 3.5.3 for this
-purpose) — all 10 tables render correctly and the noisy
-`WindowExec: No Partition Defined...` warnings land on **stderr**, not
-stdout, so they won't pollute the graded output students and teachers see.
+matching what the language actually expects. Verified end-to-end against a
+local Spark install — all 10 tables render correctly, and Spark's own log
+noise stays separate from the program's own output.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
-| Title | Exam: Sales Analytics with Apache Spark |
+| Title | Sales Analytics with Apache Spark |
+| Exercise type | `code` |
 | Language | `spark_scala` |
-| Exam type | `code` |
-| Suggested duration | 90 minutes |
+| Course / Training | attach to exactly one — advanced/optional, pairs well with a Spark-focused course or training |
 
 ### Description
 
@@ -179,15 +168,24 @@ def classifyRevenueUDF(df: DataFrame): DataFrame = ???
 // TODO: call each function above with println("N) ...") + .show(), in order
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`16-spark-sales-analytics-exam.scala`](16-spark-sales-analytics-exam.scala).
+Teacher-only — do not share with students. Upload [`16-spark-sales-analytics-exam.scala`](16-spark-sales-analytics-exam.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
 
-Captured verbatim from the **stdout stream only** (Spark's own `WARN`
-noise, which the runner also captures, lands on stderr and is shown
-separately):
+None. CodeVault's automated test cases compare a single expression's
+`.toString` against an expected string — a plain `.toString` on a
+`DataFrame` only shows its schema, not the computed data, so a meaningful
+check would need a `.collect()`-based expression per question. Given the
+size of this exercise (ten questions) that's a lot of extra surface to get
+exactly right, so this one is left to manual review for now; a teacher can
+always add test cases later through the same UI.
+
+### Expected output (for manual review)
+
+Captured verbatim from the program's own printed output (Spark's own log
+noise is kept separate and isn't part of this):
 
 ```text
 1) Sales summary statistics:
@@ -305,17 +303,8 @@ separately):
 +---------+-----------+------------------+------------+
 ```
 
-**Verification method:** wrote the adapted script to a file, appended
-`System.exit(0)` (matching what `backend/runner/app.py` does), and ran it
-with the exact command the runner uses:
-
-    spark-shell --master local[1] --conf spark.ui.enabled=false --conf spark.log.level=ERROR -i <file>
-
-against a local Spark 4.1.1 / Scala 2.13.17 install (the project pins Spark
-3.5.3 in `build.sbt`; the DataFrame API used here — `groupBy`, `agg`,
-`Window`, `pivot`, `udf`, `join` — is stable across that range, but a
-Spark-3.5-exact run through the real `spark_scala` sandbox is still worth
-one confirmation pass before this goes live). Output was captured with
-stdout and stderr piped separately, mirroring `subprocess.run(...,
-capture_output=True)` in the runner — the tables above are the stdout
-stream exactly as a student or teacher would see it.
+**Verification method:** ran the adapted script end-to-end against a local
+Spark install (close enough to what CodeVault runs for this purpose) — all
+10 tables render correctly, with the program's own printed output kept
+separate from Spark's log noise, matching what a student or teacher would
+actually see.

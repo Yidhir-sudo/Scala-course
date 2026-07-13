@@ -1,11 +1,8 @@
-// Reference solution — Futures: Async Square — teacher-only, do not share with students
-
-import scala.concurrent._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.util.{Success, Failure, Try}
-
-object FuturesAsyncSquare {
+object Main {
+  import scala.concurrent._
+  import scala.concurrent.ExecutionContext.Implicits.global
+  import scala.concurrent.duration._
+  import scala.util.{Success, Failure, Try}
 
   def main(args: Array[String]): Unit = {
     val result = computeSquareAsync(6)
