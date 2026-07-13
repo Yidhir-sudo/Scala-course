@@ -53,18 +53,9 @@ object Hello {
 }
 ```
 
-### Reference solution (teacher-only — do not share with students)
+### Reference solution
 
-```scala
-object Hello {
-  def main(args: Array[String]): Unit = {
-    val name: String = "Ada"
-    println(s"Hello, $name!")
-
-    for (i <- 1 to 10) println(i)
-  }
-}
-```
+Teacher-only — do not share with students. See [`01-hello-and-loop.scala`](01-hello-and-loop.scala).
 
 ### Expected output (for grading)
 

@@ -49,23 +49,9 @@ object FunctionalPipelineNumbers {
 }
 ```
 
-### Reference solution (teacher-only — do not share with students)
+### Reference solution
 
-```scala
-object FunctionalPipelineNumbers {
-
-  def main(args: Array[String]): Unit = {
-    val nums = List(1, 2, 3, 4, 5, 6)
-    println(processNumbers(nums))
-  }
-
-  def processNumbers(nums: List[Int]): Int =
-    nums
-      .filter(_ % 2 == 0)
-      .map(_ * 3)
-      .sum
-}
-```
+Teacher-only — do not share with students. See [`05-functional-pipeline-numbers.scala`](05-functional-pipeline-numbers.scala).
 
 ### Expected output (for grading)
 

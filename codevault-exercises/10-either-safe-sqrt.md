@@ -51,21 +51,9 @@ object EitherSafeSqrt {
 }
 ```
 
-### Reference solution (teacher-only — do not share with students)
+### Reference solution
 
-```scala
-object EitherSafeSqrt {
-
-  def main(args: Array[String]): Unit = {
-    println(safeSqrt(9))
-    println(safeSqrt(-4))
-  }
-
-  def safeSqrt(x: Double): Either[String, Double] =
-    if (x < 0) Left("Negative number")
-    else Right(math.sqrt(x))
-}
-```
+Teacher-only — do not share with students. See [`10-either-safe-sqrt.scala`](10-either-safe-sqrt.scala).
 
 ### Expected output (for grading)
 

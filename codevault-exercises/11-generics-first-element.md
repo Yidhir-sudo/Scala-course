@@ -51,21 +51,9 @@ object GenericsFirstElement {
 }
 ```
 
-### Reference solution (teacher-only — do not share with students)
+### Reference solution
 
-```scala
-object GenericsFirstElement {
-
-  def main(args: Array[String]): Unit = {
-    println(firstElement(List(1, 2, 3)))
-    println(firstElement(List("Scala", "Java")))
-    println(firstElement(List()))
-  }
-
-  def firstElement[T](list: List[T]): Option[T] =
-    list.headOption
-}
-```
+Teacher-only — do not share with students. See [`11-generics-first-element.scala`](11-generics-first-element.scala).
 
 ### Expected output (for grading)
 

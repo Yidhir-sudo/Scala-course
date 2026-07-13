@@ -10,16 +10,18 @@ session's 1–2 combined exercises were split into their own file, so the
 catalog is both richer (more distinct things for a student to attempt) and
 simpler (each one teaches a single idea).
 
-Each file has the same structure:
+Each exercise is a **pair of files**, matching this repo's own convention
+of separating the statement (`exercises.md`) from the working code
+(`SessionNExerciseX.scala`):
 
-- **CodeVault exam fields** — a table with the exact `title` /
-  `language` / `exam_type` / `duration_minutes` to set.
-- **Description** — paste directly into the "Description" field.
-- **Starter code** — paste into "Starter code" (what the student sees
-  first).
-- **Reference solution** — for grading only, never share with students.
-- **Expected output** — what a correct submission prints, for the teacher
-  to compare against when grading (CodeVault grades manually — see below).
+- **`NN-name.md`** — the announcement: the "CodeVault exam fields" table
+  (`title` / `language` / `exam_type` / `duration_minutes`), the
+  **Description** (paste into the "Description" field), the **Starter
+  code** (paste into "Starter code" — what the student sees first), and
+  the **Expected output** a correct submission should print (CodeVault has
+  no automated grading — a teacher compares this by eye, see below).
+- **`NN-name.scala`** — the answer: the complete reference solution.
+  Teacher-only, never share with students.
 
 Every plain-`scala` exercise (01–15) was run locally with
 `scala run <file> --server=false` (Scala 3, matching Piston's
@@ -75,24 +77,24 @@ Three platform realities in this CodeVault codebase shaped every file here:
 
 ## Exercise map
 
-| # | File | Language | From (this repo) |
-|---|---|---|---|
-| 01 | [01-hello-and-loop.md](01-hello-and-loop.md) | `scala` | [`sessions/session1/Session1Exercise1.scala`](../src/main/scala/sessions/session1/Session1Exercise1.scala) |
-| 02 | [02-guess-the-number.md](02-guess-the-number.md) | `scala` | [`sessions/session1/Session1Exercise2.scala`](../src/main/scala/sessions/session1/Session1Exercise2.scala) (rewritten, non-interactive) |
-| 03 | [03-word-counting.md](03-word-counting.md) | `scala` | [`sessions/session2/Session2Exercise1.scala`](../src/main/scala/sessions/session2/Session2Exercise1.scala) |
-| 04 | [04-list-vs-vector-benchmark.md](04-list-vs-vector-benchmark.md) | `scala` | [`sessions/session2/Session2Exercise2.scala`](../src/main/scala/sessions/session2/Session2Exercise2.scala) |
-| 05 | [05-functional-pipeline-numbers.md](05-functional-pipeline-numbers.md) | `scala` | [`sessions/session3/Session3.scala`](../src/main/scala/sessions/session3/Session3.scala) (Ex. 1) |
-| 06 | [06-functional-pipeline-text.md](06-functional-pipeline-text.md) | `scala` | [`sessions/session3/Session3.scala`](../src/main/scala/sessions/session3/Session3.scala) (Ex. 2) |
-| 07 | [07-oop-rectangle.md](07-oop-rectangle.md) | `scala` | [`sessions/session4/classes/Rectangle.scala`](../src/main/scala/sessions/session4/classes/Rectangle.scala) + [`Session4.scala`](../src/main/scala/sessions/session4/Session4.scala) |
-| 08 | [08-oop-vehicle-hierarchy.md](08-oop-vehicle-hierarchy.md) | `scala` | [`sessions/session4/classes/{Vehicle,Car,Bike}.scala`](../src/main/scala/sessions/session4/classes/) + [`Session4.scala`](../src/main/scala/sessions/session4/Session4.scala) |
-| 09 | [09-pattern-matching-describe.md](09-pattern-matching-describe.md) | `scala` | [`sessions/session5/Session5.scala`](../src/main/scala/sessions/session5/Session5.scala) (Ex. 1) |
-| 10 | [10-either-safe-sqrt.md](10-either-safe-sqrt.md) | `scala` | [`sessions/session5/Session5.scala`](../src/main/scala/sessions/session5/Session5.scala) (Ex. 2) |
-| 11 | [11-generics-first-element.md](11-generics-first-element.md) | `scala` | [`sessions/session6/Session6.scala`](../src/main/scala/sessions/session6/Session6.scala) (Ex. 1) |
-| 12 | [12-traits-shapes.md](12-traits-shapes.md) | `scala` | [`sessions/session6/classes/{Shape,Circle,Rectangle}.scala`](../src/main/scala/sessions/session6/classes/) + [`Session6.scala`](../src/main/scala/sessions/session6/Session6.scala) |
-| 13 | [13-futures-async-square.md](13-futures-async-square.md) | `scala` | [`sessions/session7/Session7Exercise1.scala`](../src/main/scala/sessions/session7/Session7Exercise1.scala) (bug fixed, see above) |
-| 14 | [14-futures-parallel-sum.md](14-futures-parallel-sum.md) | `scala` | [`sessions/session7/Session7Exercise2.scala`](../src/main/scala/sessions/session7/Session7Exercise2.scala) (bug fixed, see above) |
-| 15 | [15-mock-exam-weather-records.md](15-mock-exam-weather-records.md) | `scala` | [`exams/exercises.md`](../src/main/scala/exams/exercises.md) + [`MockExamSolution.scala`](../src/main/scala/exams/MockExamSolution.scala) |
-| 16 | [16-spark-sales-analytics-exam.md](16-spark-sales-analytics-exam.md) | `spark_scala` | [`exams/2026/M1_T2_IABD_RJ.md`](../src/main/scala/exams/2026/M1_T2_IABD_RJ.md) / [`.scala`](../src/main/scala/exams/2026/M1_T2_IABD_RJ.scala) (structural rewrite, see above) |
+| # | Announcement (`.md`) | Answer (`.scala`) | Language | From (this repo) |
+|---|---|---|---|---|
+| 01 | [01-hello-and-loop.md](01-hello-and-loop.md) | [01-hello-and-loop.scala](01-hello-and-loop.scala) | `scala` | [`sessions/session1/Session1Exercise1.scala`](../src/main/scala/sessions/session1/Session1Exercise1.scala) |
+| 02 | [02-guess-the-number.md](02-guess-the-number.md) | [02-guess-the-number.scala](02-guess-the-number.scala) | `scala` | [`sessions/session1/Session1Exercise2.scala`](../src/main/scala/sessions/session1/Session1Exercise2.scala) (rewritten, non-interactive) |
+| 03 | [03-word-counting.md](03-word-counting.md) | [03-word-counting.scala](03-word-counting.scala) | `scala` | [`sessions/session2/Session2Exercise1.scala`](../src/main/scala/sessions/session2/Session2Exercise1.scala) |
+| 04 | [04-list-vs-vector-benchmark.md](04-list-vs-vector-benchmark.md) | [04-list-vs-vector-benchmark.scala](04-list-vs-vector-benchmark.scala) | `scala` | [`sessions/session2/Session2Exercise2.scala`](../src/main/scala/sessions/session2/Session2Exercise2.scala) |
+| 05 | [05-functional-pipeline-numbers.md](05-functional-pipeline-numbers.md) | [05-functional-pipeline-numbers.scala](05-functional-pipeline-numbers.scala) | `scala` | [`sessions/session3/Session3.scala`](../src/main/scala/sessions/session3/Session3.scala) (Ex. 1) |
+| 06 | [06-functional-pipeline-text.md](06-functional-pipeline-text.md) | [06-functional-pipeline-text.scala](06-functional-pipeline-text.scala) | `scala` | [`sessions/session3/Session3.scala`](../src/main/scala/sessions/session3/Session3.scala) (Ex. 2) |
+| 07 | [07-oop-rectangle.md](07-oop-rectangle.md) | [07-oop-rectangle.scala](07-oop-rectangle.scala) | `scala` | [`sessions/session4/classes/Rectangle.scala`](../src/main/scala/sessions/session4/classes/Rectangle.scala) + [`Session4.scala`](../src/main/scala/sessions/session4/Session4.scala) |
+| 08 | [08-oop-vehicle-hierarchy.md](08-oop-vehicle-hierarchy.md) | [08-oop-vehicle-hierarchy.scala](08-oop-vehicle-hierarchy.scala) | `scala` | [`sessions/session4/classes/{Vehicle,Car,Bike}.scala`](../src/main/scala/sessions/session4/classes/) + [`Session4.scala`](../src/main/scala/sessions/session4/Session4.scala) |
+| 09 | [09-pattern-matching-describe.md](09-pattern-matching-describe.md) | [09-pattern-matching-describe.scala](09-pattern-matching-describe.scala) | `scala` | [`sessions/session5/Session5.scala`](../src/main/scala/sessions/session5/Session5.scala) (Ex. 1) |
+| 10 | [10-either-safe-sqrt.md](10-either-safe-sqrt.md) | [10-either-safe-sqrt.scala](10-either-safe-sqrt.scala) | `scala` | [`sessions/session5/Session5.scala`](../src/main/scala/sessions/session5/Session5.scala) (Ex. 2) |
+| 11 | [11-generics-first-element.md](11-generics-first-element.md) | [11-generics-first-element.scala](11-generics-first-element.scala) | `scala` | [`sessions/session6/Session6.scala`](../src/main/scala/sessions/session6/Session6.scala) (Ex. 1) |
+| 12 | [12-traits-shapes.md](12-traits-shapes.md) | [12-traits-shapes.scala](12-traits-shapes.scala) | `scala` | [`sessions/session6/classes/{Shape,Circle,Rectangle}.scala`](../src/main/scala/sessions/session6/classes/) + [`Session6.scala`](../src/main/scala/sessions/session6/Session6.scala) |
+| 13 | [13-futures-async-square.md](13-futures-async-square.md) | [13-futures-async-square.scala](13-futures-async-square.scala) | `scala` | [`sessions/session7/Session7Exercise1.scala`](../src/main/scala/sessions/session7/Session7Exercise1.scala) (bug fixed, see above) |
+| 14 | [14-futures-parallel-sum.md](14-futures-parallel-sum.md) | [14-futures-parallel-sum.scala](14-futures-parallel-sum.scala) | `scala` | [`sessions/session7/Session7Exercise2.scala`](../src/main/scala/sessions/session7/Session7Exercise2.scala) (bug fixed, see above) |
+| 15 | [15-mock-exam-weather-records.md](15-mock-exam-weather-records.md) | [15-mock-exam-weather-records.scala](15-mock-exam-weather-records.scala) | `scala` | [`exams/exercises.md`](../src/main/scala/exams/exercises.md) + [`MockExamSolution.scala`](../src/main/scala/exams/MockExamSolution.scala) |
+| 16 | [16-spark-sales-analytics-exam.md](16-spark-sales-analytics-exam.md) | [16-spark-sales-analytics-exam.scala](16-spark-sales-analytics-exam.scala) | `spark_scala` | [`exams/2026/M1_T2_IABD_RJ.md`](../src/main/scala/exams/2026/M1_T2_IABD_RJ.md) / [`.scala`](../src/main/scala/exams/2026/M1_T2_IABD_RJ.scala) (structural rewrite, see above) |
 
 ## Suggested difficulty ordering
 

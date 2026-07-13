@@ -58,28 +58,9 @@ object FunctionalPipelineText {
 }
 ```
 
-### Reference solution (teacher-only — do not share with students)
+### Reference solution
 
-```scala
-object FunctionalPipelineText {
-
-  def main(args: Array[String]): Unit = {
-    val text = "Scala is great and Scala is functional"
-    textPipeline(text).toList.sortBy(_._1).foreach { case (word, count) =>
-      println(s"$word -> $count")
-    }
-  }
-
-  def textPipeline(text: String): Map[String, Int] =
-    text
-      .split("\\s+")
-      .map(_.toLowerCase)
-      .filter(_.length >= 4)
-      .groupBy(identity)
-      .map { case (word, occurrences) => word -> occurrences.length }
-      .toMap
-}
-```
+Teacher-only — do not share with students. See [`06-functional-pipeline-text.scala`](06-functional-pipeline-text.scala).
 
 ### Expected output (for grading)
 
