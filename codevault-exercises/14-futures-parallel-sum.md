@@ -2,23 +2,28 @@
 
 > Adapted from [`sessions/session7/Session7Exercise2.scala`](../src/main/scala/sessions/session7/Session7Exercise2.scala) in this repo.
 
-**⚠️ Platform-driven fix:** same issue as
-[13 — Futures: Async Square](13-futures-async-square.md) — the original
-prints via `result.foreach(sum => println(...))` then calls
-`Await.ready(result, 10.seconds)`. `foreach` on a `Future` registers an
-async callback exactly like `onComplete` does, so it has the same race:
-locally this produced **zero output on 3 out of 3 runs**. Fixed here with
-`Await.result`, which returns the value to the main thread so it can print
-it directly (5/5 runs produced output after the fix).
+**⚠️ Platform-driven fixes:** same issues as
+[13 — Futures: Async Square](13-futures-async-square.md):
 
-## CodeVault exam fields
+1. The original prints via `result.foreach(sum => println(...))` then calls
+   `Await.ready(result, 10.seconds)`. `foreach` on a `Future` registers an
+   async callback exactly like `onComplete` does, so it has the same race:
+   locally this produced **zero output on 3 out of 3 runs**. Fixed here
+   with `Await.result`, which returns the value to the main thread so it
+   can print it directly (5/5 runs produced output after the fix).
+
+2. Uses a plain `object Main { def main(args) = ... }` rather than
+   `object Main extends App`, for the same class-initialization-deadlock
+   reason described in exercise 13.
+
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Futures: Parallel Sum |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 15 minutes |
+| Course / Training | attach to exactly one — whichever holds session 7 |
 
 ### Description
 
@@ -36,8 +41,8 @@ sums into one `Future[Int]` using a `for`-comprehension.
 benefit of doing the two halves in parallel. This is the payoff from
 [04 — List vs Vector Benchmark](04-list-vs-vector-benchmark.md).
 
-In `main`, build `(1 to 1000000).toVector`, call `parallelSum`, then
-`Await.result` it and print `"Total sum: <value>"`.
+Build `(1 to 1000000).toVector`, call `parallelSum`, then `Await.result` it
+and print `"Total sum: <value>"`.
 
 **Example output**
 
@@ -53,11 +58,10 @@ produces; you're not expected to fix the overflow.
 ### Starter code
 
 ```scala
-import scala.concurrent._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-
-object FuturesParallelSum {
+object Main {
+  import scala.concurrent._
+  import scala.concurrent.ExecutionContext.Implicits.global
+  import scala.concurrent.duration._
 
   def main(args: Array[String]): Unit = {
     val data = (1 to 1000000).toVector
@@ -74,15 +78,21 @@ object FuturesParallelSum {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`14-futures-parallel-sum.scala`](14-futures-parallel-sum.scala).
+Teacher-only — do not share with students. Upload [`14-futures-parallel-sum.scala`](14-futures-parallel-sum.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
+
+None — same reason as [13](13-futures-async-square.md): this exercise's
+whole point is a blocking wait for asynchronous work, which risks a
+deadlock once something else evaluates an expression against it alongside
+your own code. Review by eye against the expected output below instead.
+
+### Expected output (for manual review)
 
 ```text
 Total sum: 1784293664
 ```
 
-Verified locally with `scala run 14.scala --server=false` (Scala 3), 5
-consecutive runs, all identical.
+Verified locally, 5 consecutive runs, all identical.

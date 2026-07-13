@@ -2,14 +2,14 @@
 
 > Adapted from [`sessions/session3/Session3.scala`](../src/main/scala/sessions/session3/Session3.scala) (Exercise 1) in this repo.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Functional Pipeline: Numbers |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 10 minutes |
+| Course / Training | attach to exactly one — whichever holds session 3 |
 
 ### Description
 
@@ -28,19 +28,16 @@ It should, in order:
     val nums = List(1, 2, 3, 4, 5, 6)
     processNumbers(nums) // 36   (2*3 + 4*3 + 6*3 = 6 + 12 + 18)
 
-Your `main` should call `processNumbers` on that example list and print the
-result.
+Call `processNumbers` on that example list and print the result.
 ```
 
 ### Starter code
 
 ```scala
-object FunctionalPipelineNumbers {
+object Main extends App {
 
-  def main(args: Array[String]): Unit = {
-    val nums = List(1, 2, 3, 4, 5, 6)
-    println(processNumbers(nums))
-  }
+  val nums = List(1, 2, 3, 4, 5, 6)
+  println(processNumbers(nums))
 
   def processNumbers(nums: List[Int]): Int = {
     // TODO: filter -> map -> sum, chained
@@ -49,15 +46,14 @@ object FunctionalPipelineNumbers {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`05-functional-pipeline-numbers.scala`](05-functional-pipeline-numbers.scala).
+Teacher-only — do not share with students. Upload [`05-functional-pipeline-numbers.scala`](05-functional-pipeline-numbers.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
 
-```text
-36
-```
+| Name | Call expression | Expected output | Trim | Tolerance |
+|---|---|---|---|---|
+| even numbers tripled and summed | `processNumbers(List(1, 2, 3, 4, 5, 6))` | `36` | off | — |
 
-Verified locally with `scala run 05.scala --server=false` (Scala 3) — output
-matches exactly.
+Verified locally by simulating how CodeVault's automated test-case check evaluates a call expression against the correction and the output matches the expected output above.

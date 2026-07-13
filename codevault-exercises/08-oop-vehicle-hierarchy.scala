@@ -1,20 +1,14 @@
-// Reference solution — OOP: Vehicle Hierarchy — teacher-only, do not share with students
-
-class Vehicle {
-  def move(): Unit = println("The vehicle is moving")
-}
-
-class Car extends Vehicle {
-  override def move(): Unit = println("The car is driving")
-}
-
-class Bike extends Vehicle {
-  override def move(): Unit = println("The bike is rolling")
-}
-
-object VehicleDemo {
-  def main(args: Array[String]): Unit = {
-    val vehicles: List[Vehicle] = List(new Car(), new Bike(), new Vehicle())
-    vehicles.foreach(_.move())
+object Main extends App {
+  class Vehicle {
+    def move(): String = "The vehicle is moving"
   }
+  class Car extends Vehicle {
+    override def move(): String = "The car is driving"
+  }
+  class Bike extends Vehicle {
+    override def move(): String = "The bike is rolling"
+  }
+
+  val vehicles: List[Vehicle] = List(new Car(), new Bike(), new Vehicle())
+  vehicles.foreach(v => println(v.move()))
 }

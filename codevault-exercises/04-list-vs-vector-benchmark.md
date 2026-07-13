@@ -3,20 +3,20 @@
 > Adapted from [`sessions/session2/Session2Exercise2.scala`](../src/main/scala/sessions/session2/Session2Exercise2.scala) in this repo.
 
 **Test-simplification note:** this exercise measures wall-clock time, so its
-output is inherently non-deterministic — grading can't be "does the output
-match exactly." The expected output below is a **format template**: check
-the shape of the two printed lines and the *relative* result (`List` append
-should be visibly slower than `Vector` append), not the exact millisecond
-values, which vary by machine and JVM warm-up state.
+output is inherently non-deterministic. CodeVault's automated test cases do
+an exact (or tolerance-bound *numeric*) string comparison of a call
+expression's return value — neither fits a function whose whole point is
+"print two timings that vary run to run." No test cases here; review by eye
+using the format template below.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | List vs Vector Benchmark |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 15 minutes |
+| Course / Training | attach to exactly one — whichever holds session 2 |
 
 ### Description
 
@@ -34,7 +34,7 @@ It runs `operation`, measures how long it took in **milliseconds**, and
 returns that duration. (`operation: => Unit` is a *by-name* parameter — the
 block is passed unevaluated and only runs when `timeOperation` calls it.)
 
-In `main`:
+Then:
 1. Build a `List` and a `Vector`, both containing 50,000 zeros
    (`List.fill(n)(0)` / `Vector.fill(n)(0)`).
 2. Time a **prepend** (`1 +: collection`) on each.
@@ -52,17 +52,15 @@ else — that depends on the machine. What should hold true every time:
 ### Starter code
 
 ```scala
-object ListVsVector {
+object Main extends App {
 
-  def main(args: Array[String]): Unit = {
-    val n = 50000
-    val list = List.fill(n)(0)
-    val vector = Vector.fill(n)(0)
+  val n = 50000
+  val list = List.fill(n)(0)
+  val vector = Vector.fill(n)(0)
 
-    // TODO: time a prepend (1 +: collection) on each collection
-    // TODO: time an append (collection :+ 1) on each collection
-    // TODO: println the two results, matching the format in the description
-  }
+  // TODO: time a prepend (1 +: collection) on each collection
+  // TODO: time an append (collection :+ 1) on each collection
+  // TODO: println the two results, matching the format in the description
 
   def timeOperation(operation: => Unit): Long = {
     // TODO: record time before and after running `operation`, return the
@@ -72,11 +70,13 @@ object ListVsVector {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`04-list-vs-vector-benchmark.scala`](04-list-vs-vector-benchmark.scala).
+Teacher-only — do not share with students. Upload [`04-list-vs-vector-benchmark.scala`](04-list-vs-vector-benchmark.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading — template, not exact match)
+### Test cases
+
+None — see the note above. Review by eye instead:
 
 ```text
 Prepend : List = <t> ms, Vector = <t> ms
@@ -90,7 +90,7 @@ Prepend : List = 0 ms, Vector = 0 ms
 Append  : List = 5 ms, Vector = 0 ms
 ```
 
-Grading checklist: both lines present and correctly formatted; the `List`
+Review checklist: both lines present and correctly formatted; the `List`
 append time is clearly ≥ the `Vector` append time.
 
 Verified locally with `scala run 04.scala --server=false` (Scala 3), run

@@ -2,14 +2,14 @@
 
 > Adapted from [`sessions/session1/Session1Exercise1.scala`](../src/main/scala/sessions/session1/Session1Exercise1.scala) in this repo.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Hello and Loop |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 10 minutes |
+| Course / Training | attach to exactly one — whichever holds session 1 |
 
 ### Description
 
@@ -42,22 +42,25 @@ Hello, Ada!
 ### Starter code
 
 ```scala
-object Hello {
-  def main(args: Array[String]): Unit = {
-    val name: String = "" // TODO: put your name here
+object Main extends App {
 
-    // TODO: print "Hello, <name>!" using string interpolation
+  val name: String = "" // TODO: put your name here
 
-    // TODO: print the numbers 1 to 10, one per line, using a for loop
-  }
+  // TODO: print "Hello, <name>!" using string interpolation
+
+  // TODO: print the numbers 1 to 10, one per line, using a for loop
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`01-hello-and-loop.scala`](01-hello-and-loop.scala).
+Teacher-only — do not share with students. Upload [`01-hello-and-loop.scala`](01-hello-and-loop.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
+
+None — this exercise only prints to stdout, so there's no return value a call expression could check. Review manually against the expected output below.
+
+### Expected output (for manual review)
 
 The exact greeting line depends on the `name` the student picks, but the
 shape must match `Hello, <name>!` followed by the numbers 1 through 10, one

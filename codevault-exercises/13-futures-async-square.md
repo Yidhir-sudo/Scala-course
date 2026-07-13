@@ -2,29 +2,42 @@
 
 > Adapted from [`sessions/session7/Session7Exercise1.scala`](../src/main/scala/sessions/session7/Session7Exercise1.scala) in this repo.
 
-**⚠️ Platform-driven fix (not just a style choice):** the original registers
-its result via `result.onComplete { ... }` and then calls
-`Await.ready(result, 5.seconds)`. That looks like it "waits for completion,"
-but it doesn't — `Await.ready` only blocks until the `Future`'s *value* is
-computed; it gives no guarantee that an already-registered `onComplete`
-callback (which runs on a separate thread from the global `ExecutionContext`)
-has actually finished executing before `main` returns and the JVM exits.
-Running the original pattern locally with `scala run --server=false`
-produced **zero output on 5 out of 5 runs** — the program exited before the
-callback's `println` ever ran. This version uses `Await.result` instead,
-which blocks the *main thread itself* until the value is available and lets
-it print directly, removing the race entirely (5/5 runs produced output).
-If you've seen a Scala Future example elsewhere that pairs `onComplete` with
-`Await.ready` for "safety," it has the same latent bug.
+**⚠️ Platform-driven fixes (not just a style choice):**
 
-## CodeVault exam fields
+1. The original registers its result via `result.onComplete { ... }` and
+   then calls `Await.ready(result, 5.seconds)`. That looks like it "waits
+   for completion," but it doesn't — `Await.ready` only blocks until the
+   `Future`'s *value* is computed; it gives no guarantee that an
+   already-registered `onComplete` callback (which runs on a separate
+   thread from the global `ExecutionContext`) has actually finished
+   executing before `main` returns and the JVM exits. Running the original
+   pattern locally produced **zero output on 5 out of 5 runs** — the
+   program exited before the callback's `println` ever ran. This version
+   uses `Await.result` instead, which blocks the *main thread itself* until
+   the value is available and lets it print directly, removing the race
+   entirely (5/5 runs produced output). If you've seen a Scala `Future`
+   example elsewhere that pairs `onComplete` with `Await.ready` for
+   "safety," it has the same latent bug.
+
+2. This exercise uses a plain `object Main { def main(args) = ... }`
+   rather than `object Main extends App`. `App`'s `DelayedInit` machinery
+   runs your top-level code as part of the object's own class
+   initialization; blocking on a `Future` there can deadlock against the
+   Future's own thread pool (a worker thread trying to touch the
+   still-initializing class has to wait for that same initialization to
+   finish). This reproduced consistently in local testing whenever the code
+   used `extends App`, independent of anything else about the exercise. An
+   explicit `def main` avoids it entirely. Worth knowing if you write your
+   own `Future`-based exercises using `extends App`.
+
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Futures: Async Square |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 15 minutes |
+| Course / Training | attach to exactly one — whichever holds session 7 |
 
 ### Description
 
@@ -43,11 +56,10 @@ You'll need these imports:
     import scala.concurrent.duration._
     import scala.util.{Success, Failure, Try}
 
-In `main`, call `computeSquareAsync(6)`, then use `Await.result` to block
-until it completes and get the `Int` value directly (wrap it in `Try` so you
-can still branch on `Success`/`Failure`, e.g. if the future times out).
-Print `"The square is: <value>"` on success, or `"Error: <message>"` on
-failure.
+Call `computeSquareAsync(6)`, then use `Await.result` to block until it
+completes and get the `Int` value directly (wrap it in `Try` so you can
+still branch on `Success`/`Failure`, e.g. if the future times out). Print
+`"The square is: <value>"` on success, or `"Error: <message>"` on failure.
 
 **Example output**
 
@@ -64,12 +76,11 @@ back, so there's no race.
 ### Starter code
 
 ```scala
-import scala.concurrent._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.util.{Success, Failure, Try}
-
-object FuturesAsyncSquare {
+object Main {
+  import scala.concurrent._
+  import scala.concurrent.ExecutionContext.Implicits.global
+  import scala.concurrent.duration._
+  import scala.util.{Success, Failure, Try}
 
   def main(args: Array[String]): Unit = {
     val result = computeSquareAsync(6)
@@ -85,15 +96,22 @@ object FuturesAsyncSquare {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`13-futures-async-square.scala`](13-futures-async-square.scala).
+Teacher-only — do not share with students. Upload [`13-futures-async-square.scala`](13-futures-async-square.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
+
+None. This exercise's whole point is a blocking wait for asynchronous work
+— exactly the kind of code that risks the class-initialization deadlock
+described above once something else evaluates an expression against it
+alongside your own code. Review by eye against the expected output below
+instead.
+
+### Expected output (for manual review)
 
 ```text
 The square is: 36
 ```
 
-Verified locally with `scala run 13.scala --server=false` (Scala 3), 5
-consecutive runs, all identical.
+Verified locally, 5 consecutive runs, all identical.

@@ -2,14 +2,14 @@
 
 > Adapted from [`sessions/session6/Session6.scala`](../src/main/scala/sessions/session6/Session6.scala) (Exercise 1) in this repo.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Generics: First Element |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 10 minutes |
+| Course / Training | attach to exactly one — whichever holds session 6 |
 
 ### Description
 
@@ -28,21 +28,19 @@ don't write it once per type.
     println(firstElement(List("Scala", "Java"))) // Some(Scala)
     println(firstElement(List()))                // None
 
-Your `main` should call `firstElement` on exactly those three lists, in that
-order, printing each result. (Hint: `List` already has a method that does
-exactly this — find it before writing your own logic.)
+Call `firstElement` on exactly those three lists, in that order, printing
+each result. (Hint: `List` already has a method that does exactly this —
+find it before writing your own logic.)
 ```
 
 ### Starter code
 
 ```scala
-object GenericsFirstElement {
+object Main extends App {
 
-  def main(args: Array[String]): Unit = {
-    println(firstElement(List(1, 2, 3)))
-    println(firstElement(List("Scala", "Java")))
-    println(firstElement(List()))
-  }
+  println(firstElement(List(1, 2, 3)))
+  println(firstElement(List("Scala", "Java")))
+  println(firstElement(List()))
 
   def firstElement[T](list: List[T]): Option[T] = {
     // TODO: return the first element as Some(...), or None if empty
@@ -51,17 +49,16 @@ object GenericsFirstElement {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`11-generics-first-element.scala`](11-generics-first-element.scala).
+Teacher-only — do not share with students. Upload [`11-generics-first-element.scala`](11-generics-first-element.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
 
-```text
-Some(1)
-Some(Scala)
-None
-```
+| Name | Call expression | Expected output | Trim | Tolerance |
+|---|---|---|---|---|
+| Int list | `firstElement(List(1, 2, 3))` | `Some(1)` | off | — |
+| String list | `firstElement(List("Scala", "Java"))` | `Some(Scala)` | off | — |
+| empty list | `firstElement(List.empty[Int])` | `None` | off | — |
 
-Verified locally with `scala run 11.scala --server=false` (Scala 3) — output
-matches exactly.
+Verified locally by simulating how CodeVault's automated test-case check evaluates a call expression against the correction and all three match the expected outputs above.

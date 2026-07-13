@@ -2,20 +2,27 @@
 
 > Adapted from [`exams/exercises.md`](../src/main/scala/exams/exercises.md) + [`exams/MockExamSolution.scala`](../src/main/scala/exams/MockExamSolution.scala) in this repo. A good end-of-course practice exam: it combines `Option`, `groupBy`, `foldLeft`, and `case class.copy` from earlier sessions into one multi-part problem.
 
-**Test-simplification note:** the original prints two of the seven results
-via `Map.mkString`, whose entry order isn't guaranteed. This version sorts
-both maps by key before printing (by city name for Q2, by date for Q7) so
-the output is fully deterministic — verified with 3 separate runs producing
-byte-identical output.
+**Adaptations:**
+1. The original prints two of the seven results via `Map.mkString`, whose
+   entry order isn't guaranteed. This version sorts both maps by key before
+   printing (by city name for Q2, by date for Q7) so the output is fully
+   deterministic — verified with 3 separate runs producing byte-identical
+   output.
+2. `case class Record` and the sample `data` moved from inside `main` to
+   the top of the single outer object, alongside the seven functions —
+   partly for consistency with the other exercises here, and partly so a
+   test case's call expression (e.g. `averageTemperature(data)`) can
+   reference `data` directly rather than needing its own copy of the
+   sample dataset.
 
-## CodeVault exam fields
+## CodeVault exercise fields
 
 | Field | Value |
 |---|---|
 | Title | Mock Exam: Weather Records |
+| Exercise type | `code` |
 | Language | `scala` |
-| Exam type | `code` |
-| Suggested duration | 45 minutes |
+| Course / Training | attach to exactly one — end-of-course practice, works well as a standalone training exercise |
 
 ### Description
 
@@ -87,41 +94,37 @@ A map from date to `(averageTemperature, averageHumidity)` for that day.
 Bonus: compute both averages in a single `foldLeft` over each day's
 records.
 
-**Your `main`** should call all seven functions on the sample data above and
-print one line per question, numbered `1)` through `7)`. For Q2 and Q7,
+**Your program** should call all seven functions on the sample data above
+and print one line per question, numbered `1)` through `7)`. For Q2 and Q7,
 which return a `Map`, sort the entries by key before printing — a `Map`'s
-own iteration order isn't guaranteed, and unsorted output can't be graded
-reliably. Use `min = 0.0, max = 10.0` for Q5.
+own iteration order isn't guaranteed. Use `min = 0.0, max = 10.0` for Q5.
 ```
 
 ### Starter code
 
 ```scala
-case class Record(city: String, date: String, temperature: Double, humidity: Double)
+object Main extends App {
+  case class Record(city: String, date: String, temperature: Double, humidity: Double)
 
-object MockExamWeatherRecords {
+  val data = List(
+    Record("Paris", "2025-03-01", 12.3, 0.65),
+    Record("Paris", "2025-03-02", 15.1, 0.60),
+    Record("Lyon", "2025-03-01", 10.5, 0.70),
+    Record("Lyon", "2025-03-02", 9.8, 0.75),
+    Record("Marseille", "2025-03-01", 17.2, 0.55),
+    Record("Marseille", "2025-03-02", 18.4, 0.50)
+  )
 
-  def main(args: Array[String]): Unit = {
-    val data = List(
-      Record("Paris", "2025-03-01", 12.3, 0.65),
-      Record("Paris", "2025-03-02", 15.1, 0.60),
-      Record("Lyon", "2025-03-01", 10.5, 0.70),
-      Record("Lyon", "2025-03-02", 9.8, 0.75),
-      Record("Marseille", "2025-03-01", 17.2, 0.55),
-      Record("Marseille", "2025-03-02", 18.4, 0.50)
-    )
+  val tempMin = 0.0
+  val tempMax = 10.0
 
-    val tempMin = 0.0
-    val tempMax = 10.0
-
-    // TODO: 1) print averageTemperature(data)
-    // TODO: 2) print averageTemperatureByCity(data), sorted by city name
-    // TODO: 3) print hottestCity(data)
-    // TODO: 4) print normalizeTemperatures(data)
-    // TODO: 5) print filterByTemperature(data, tempMin, tempMax)
-    // TODO: 6) print cityWithMostVariation(data)
-    // TODO: 7) print dailySummary(data), sorted by date
-  }
+  // TODO: 1) print averageTemperature(data)
+  // TODO: 2) print averageTemperatureByCity(data), sorted by city name
+  // TODO: 3) print hottestCity(data)
+  // TODO: 4) print normalizeTemperatures(data)
+  // TODO: 5) print filterByTemperature(data, tempMin, tempMax)
+  // TODO: 6) print cityWithMostVariation(data)
+  // TODO: 7) print dailySummary(data), sorted by date
 
   def averageTemperature(data: List[Record]): Option[Double] = ???
 
@@ -139,11 +142,30 @@ object MockExamWeatherRecords {
 }
 ```
 
-### Reference solution
+### Correction
 
-Teacher-only — do not share with students. See [`15-mock-exam-weather-records.scala`](15-mock-exam-weather-records.scala).
+Teacher-only — do not share with students. Upload [`15-mock-exam-weather-records.scala`](15-mock-exam-weather-records.scala) via the "Correction" file picker (must be a `.scala` file).
 
-### Expected output (for grading)
+### Test cases
+
+| Name | Call expression | Expected output | Trim | Tolerance |
+|---|---|---|---|---|
+| Q1 average temperature | `averageTemperature(data)` | `Some(13.883333333333335)` | off | — |
+| Q2 average by city, sorted | `averageTemperatureByCity(data).toList.sortBy(_._1).mkString(",")` | `(Lyon,10.15),(Marseille,17.799999999999997),(Paris,13.7)` | off | — |
+| Q3 hottest city | `hottestCity(data)` | `Some(Marseille)` | off | — |
+| Q6 largest variation | `cityWithMostVariation(data)` | `Some(Paris)` | off | — |
+| Q7 daily summary, sorted | `dailySummary(data).toList.sortBy(_._1).mkString(",")` | `(2025-03-01,(13.333333333333334,0.6333333333333334)),(2025-03-02,(14.433333333333332,0.6166666666666667))` | off | — |
+| Q5 filter by range | `filterByTemperature(data, 0.0, 10.0).mkString(",")` | `Record(Lyon,2025-03-02,9.8,0.75)` | off | — |
+
+Q4 (`normalizeTemperatures`) isn't covered by a test case — its result is a
+full list of records, which is easy to eyeball in the expected output below
+but awkward to pin to one exact string across environments.
+
+Verified locally by simulating how CodeVault's automated test-case check
+evaluates each call expression against the correction — all six match the
+expected outputs above.
+
+### Expected output (for manual review of Q4, or a full end-to-end read)
 
 ```text
 1) Average temperature (all records): 13.883333333333335
@@ -155,10 +177,9 @@ Teacher-only — do not share with students. See [`15-mock-exam-weather-records.
 7) Daily summary: 2025-03-01 -> (avgTemp=13.333333333333334, avgHumidity=0.6333333333333334), 2025-03-02 -> (avgTemp=14.433333333333332, avgHumidity=0.6166666666666667)
 ```
 
-Sanity checks a grader can do by hand: Marseille's average (17.8) is
+Sanity checks a reviewer can do by hand: Marseille's average (17.8) is
 visibly the highest of the three cities (Q3 ✓); Paris has the widest
 temperature spread (15.1 − 12.3 = 2.8 °C, vs 0.7 °C for Lyon and 1.2 °C for
 Marseille), so Q6 = Paris ✓.
 
-Verified locally with `scala run 15.scala --server=false` (Scala 3), 3
-consecutive runs, byte-identical output each time.
+Verified locally, 3 consecutive runs, byte-identical output each time.
