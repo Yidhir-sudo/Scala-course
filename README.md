@@ -15,6 +15,7 @@ computation and beyond — with **statements** (`exercises.md`) and **fully work
 - [Goals](#-goals)
 - [Project Structure](#-project-structure)
 - [Curriculum Overview](#-curriculum-overview)
+- [CodeVault Exercises](#-codevault-exercises)
 - [Requirements](#-requirements)
 - [Getting Started](#-getting-started)
 - [Running an Exercise](#-running-an-exercise)
@@ -58,6 +59,11 @@ computation and beyond — with **statements** (`exercises.md`) and **fully work
 │   │       ├── session7/              # Futures, async computation
 │   │       └── session8/              # (Reserved for upcoming material)
 │   └── test/scala/                    # ScalaTest test suites
+├── codevault-exercises/               # These exercises, adapted for the CodeVault platform
+│   ├── README.md                      # Mapping table + why each adaptation was needed
+│   ├── 01-hello-and-loop.md           # Announcement (statement, starter code, expected output)
+│   ├── 01-hello-and-loop.scala        # Answer (reference solution, teacher-only)
+│   └── ...                            # 16 exercises total, each an .md + .scala pair
 └── README.md                          # You are here
 ```
 
@@ -78,6 +84,29 @@ computation and beyond — with **statements** (`exercises.md`) and **fully work
 | **6** | Generics & traits | `firstElement[T]`, abstract `Shape` (`Circle`, `Rectangle`) |
 | **7** | Concurrency | `Future`, `ExecutionContext`, parallel sum with `Vector.splitAt` |
 | **Exam** | Mock exam | Aggregations on `Record` (average / min-max / daily summary) |
+
+---
+
+## 🎓 CodeVault Exercises
+
+This course also feeds [CodeVault](https://github.com/Yidhir-sudo/codevault), a
+platform where students write and run Scala/Spark code directly in the browser.
+[`codevault-exercises/`](codevault-exercises/) re-packages the 9 exercise groups
+above into **16 standalone exercises**, each a pair of files:
+
+- **`NN-name.md`** — the announcement: statement, starter code, and expected
+  output, ready to paste into CodeVault's exam-creation form.
+- **`NN-name.scala`** — the answer: the complete reference solution,
+  teacher-only.
+
+The adaptation isn't just a reformat — CodeVault's sandbox has real
+constraints this course's own exercises don't (no `stdin`, a single file per
+submission, no test framework, and a completely different execution model
+for Spark). Every exercise was re-verified against those constraints, which
+caught a couple of real bugs along the way (a `Future` completion race in
+the session 7 exercises, and a Spark script that would silently produce no
+output at all). See [`codevault-exercises/README.md`](codevault-exercises/README.md)
+for the full mapping and the story behind each fix.
 
 ---
 
